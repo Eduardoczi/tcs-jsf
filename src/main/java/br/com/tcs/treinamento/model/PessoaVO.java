@@ -10,6 +10,8 @@ public class PessoaVO implements Serializable {
     private String nome;
     private Integer idade;
     private String email;
+    private String area;
+    private Date dataAdmissao;
     private Date data;
     private String tipoDocumento; // "CPF" ou "CNPJ"
     private String numeroCPF;
@@ -33,6 +35,22 @@ public class PessoaVO implements Serializable {
     }
 
     public PessoaVO() {
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public Date getDataAdmissao() {
+        return dataAdmissao;
+    }
+
+    public void setDataAdmissao(Date dataAdmissao) {
+        this.dataAdmissao = dataAdmissao;
     }
 
     public String getNome() {

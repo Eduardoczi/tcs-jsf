@@ -27,6 +27,12 @@ public class Pessoa implements Serializable {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String area;
+
+    @Temporal(TemporalType.DATE)
+    private Date dataAdmissao;
+
     // Data de nascimento (utiliza somente a data, sem horário)
     @Temporal(TemporalType.DATE)
     private Date data;
@@ -70,6 +76,23 @@ public class Pessoa implements Serializable {
     }
 
     // Getters e Setters
+
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public Date getDataAdmissao() {
+        return dataAdmissao;
+    }
+
+    public void setDataAdmissao(Date dataAdmissao) {
+        this.dataAdmissao = dataAdmissao;
+    }
 
     public Long getId() {
         return id;
