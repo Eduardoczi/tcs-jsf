@@ -31,6 +31,14 @@
                     <p:outputLabel for="email" value="E-mail:" />
                     <h:outputText id="email" value="#{consultaPessoaBean.pessoaSelecionada.email}" />
 
+                    <p:outputLabel for="area" value="Area:" />
+                    <h:outputText id="area" value="#{consultaPessoaBean.pessoaSelecionada.area}" />
+
+                    <p:outputLabel for="dataAdmissao" value="Data de Admissao:" />
+                    <h:outputText id="dataAdmissao">
+                        <f:convertDateTime pattern="dd/MM/yyyy" value="#{consultaPessoaBean.pessoaSelecionada.dataAdmissao}" />
+                    </h:outputText>
+
                     <p:outputLabel for="data" value="Data de Nascimento:" />
                     <h:outputText id="data">
                         <f:convertDateTime pattern="dd/MM/yyyy" value="#{consultaPessoaBean.pessoaSelecionada.data}" />
