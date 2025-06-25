@@ -44,7 +44,7 @@
                                 #{p.area}
                             </p:column>
 
-                            <p:column headerText="Data de Admissao" style="width:12%;">
+                            <p:column headerText="Data de admissao" style="width:12%;">
                                 <h:outputText value="#{p.dataAdmissao}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
@@ -81,6 +81,13 @@
                                     <p:commandButton value="Excluir"
                                                      action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                      icon="pi pi-trash"
+                                                     styleClass="ui-button-secondary"
+                                                     style="width:140px;"
+                                                     update="@form" />
+
+                                    <p:commandButton value="Editar"
+                                                     action="#{consultaPessoaBean.prepararEdicao(p)}"
+                                                     icon="pi pi-pencil"
                                                      styleClass="ui-button-secondary"
                                                      style="width:140px;"
                                                      update="@form" />
