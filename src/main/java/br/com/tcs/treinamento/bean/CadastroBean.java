@@ -110,6 +110,26 @@ public class CadastroBean implements Serializable {
             PrimeFaces.current().executeScript("PF('confirmDialog').show();");
         }
     }
+
+    public void validarCamposAreaAdmissao() {
+        List<String> erros = new ArrayList<>();
+
+        if (cadastrarPessoa.getArea() == null || cadastrarPessoa.getArea().trim().isEmpty()) {
+            erros.add("Area não informado.");
+        }
+
+        if (cadastrarPessoa.getDataAdmissao() == null) {
+            erros.add("Data de admissao não informada.");
+        }
+
+        if (!erros.isEmpty()) {
+            errorMessage = String.join("<br/>", erros);
+            PrimeFaces.current().executeScript("PF('errorDialog').show();");
+        } else {
+            PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
+        }
+    }
+
     public String getErrorMessage() {
         return errorMessage;
     }

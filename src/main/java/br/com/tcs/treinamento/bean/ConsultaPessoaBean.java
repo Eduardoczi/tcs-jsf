@@ -169,6 +169,25 @@ public class ConsultaPessoaBean implements Serializable {
         }
     }
 
+    public void validarCamposAreaAdmissao() {
+        List<String> erros = new ArrayList<>();
+
+        if (pessoaSelecionada.getArea() == null || pessoaSelecionada.getArea().trim().isEmpty()) {
+            erros.add("Area não informado.");
+        }
+
+        if (pessoaSelecionada.getDataAdmissao() == null) {
+            erros.add("Data de admissao não informada.");
+        }
+
+        if (!erros.isEmpty()) {
+            errorMessage = String.join("<br/>", erros);
+            PrimeFaces.current().executeScript("PF('errorDialog').show();");
+        } else {
+            PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
+        }
+    }
+
     public void exportarPdf() {
         System.out.println("Implementar metodo para PDF");
     }

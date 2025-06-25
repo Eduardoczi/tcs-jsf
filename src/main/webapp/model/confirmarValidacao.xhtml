@@ -1,0 +1,16 @@
+<!-- /model/confirmarModel.xhtml -->
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+    <p:confirmDialog widgetVar="confirmDialogVal" header="Confirmação"
+                     message="Dados preenchidos?"
+                     severity="info" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Fechar"
+                         onclick="PF('confirmDialogVal').hide(); return false;"
+                         type="button"
+                         icon="pi pi-times"
+                         styleClass="ui-button-secondary" />
+    </p:confirmDialog>
+</ui:composition>

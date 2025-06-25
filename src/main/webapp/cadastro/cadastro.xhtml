@@ -15,6 +15,9 @@
             <ui:include src="/model/confirmarModel.xhtml" >
                     <ui:param name="modalBean" value="#{cadastroBean}"/>
             </ui:include>
+            <ui:include src="/model/confirmarValidacao.xhtml" >
+                <ui:param name="modalBean" value="#{cadastroBean}"/>
+            </ui:include>
 
             <p:panel header="Formulário de Cadastro" style="width:600px;">
                 <!-- Mensagens gerais de erro -->
@@ -29,7 +32,10 @@
 
                     <p:outputLabel for="idade" value="Idade:" styleClass="label" />
                     <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
-                                 style="width:4em;" />
+                                 style="width:4em;"
+                                 required="true"
+                                 requiredMessage="É necessario informar a idade"/>
+
 
                     <p:outputLabel for="email" value="E-mail:" styleClass="label" />
                     <p:inputText id="email" value="#{cadastroBean.cadastrarPessoa.email}"
@@ -90,6 +96,12 @@
                      Se a validação for bem-sucedida, o método validarCampos() invoca o modal de confirmação. -->
                 <p:commandButton value="Salvar"
                                  action="#{cadastroBean.validarCampos}"
+                                 update="@form"
+                                 icon="pi pi-save"
+                                 ajax="true" />
+
+                <p:commandButton value="Validação"
+                                 action="#{cadastroBean.validarCamposAreaAdmissao}"
                                  update="@form"
                                  icon="pi pi-save"
                                  ajax="true" />
