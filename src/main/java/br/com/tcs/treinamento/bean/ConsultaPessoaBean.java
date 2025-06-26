@@ -57,6 +57,10 @@ public class ConsultaPessoaBean implements Serializable {
         return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
     }
 
+    public void prepararEdicaoArea(Pessoa pessoa) {
+        this.pessoaSelecionada = pessoa;
+    }
+
     public String prepararExclusao(Pessoa pessoa) {
         this.pessoaSelecionada = pessoa;
         return "excluir?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=false";
@@ -187,6 +191,24 @@ public class ConsultaPessoaBean implements Serializable {
             PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
         }
     }
+
+    public void salvarArea() {
+        try {
+            pessoaService.atualizar(pessoaSelecionada);
+
+            for (int i = 0; i < pessoas.size(); i++) {
+                if (pessoas.get(i).getId().equals(pessoaSelecionada.getId())) {
+                    pessoas.set(i, pessoaSelecionada);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            errorMessage = "Erro ao salvar a área: " + e.getMessage();
+            PrimeFaces.current().executeScript("PF('errorDialog').show();");
+        }
+    }
+
+
 
     public void exportarPdf() {
         System.out.println("Implementar metodo para PDF");
