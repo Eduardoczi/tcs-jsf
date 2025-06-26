@@ -85,41 +85,10 @@
                                                      styleClass="ui-button-secondary"
                                                      style="width:140px;"
                                                      update="@form" />
-
-                                    <p:commandButton value="Editar"
-                                                     action="#{consultaPessoaBean.prepararEdicaoArea(p)}"
-                                                     icon="pi pi-pencil"
-                                                     styleClass="ui-button-secondary"
-                                                     style="width:140px;"
-                                                     update="@form"
-                                                     oncomplete="PF('editarDialog').show();" />
                                 </div>
                             </p:column>
 
                         </p:dataTable>
-
-                        <p:dialog header="Editar Área"
-                                  widgetVar="editarDialog"
-                                  modal="true"
-                                  resizable="false"
-                                  id="dialogEditar"
-                                  appendTo="@(body)">
-
-                            <h:panelGrid columns="2" cellpadding="5">
-
-                                <h:outputLabel for="area" value="Área:" />
-                                <p:inputText id="area" value="#{consultaPessoaBean.pessoaSelecionada.area}" />
-
-                                <f:facet name="footer">
-                                    <p:commandButton value="Salvar"
-                                                     action="#{consultaPessoaBean.salvarArea}"
-                                                     icon="pi pi-check"
-                                                     update="formConsulta:tabelaPessoas"
-                                                     oncomplete="PF('editarDialog').hide();" />
-                                </f:facet>
-
-                            </h:panelGrid>
-                        </p:dialog>
 
                         <br/>
 
