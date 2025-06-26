@@ -27,48 +27,19 @@
                 <p:panelGrid columns="2" columnClasses="label,value" style="width:100%; margin-bottom:1em;">
                     <p:outputLabel for="nome" value="Nome Completo da Empresa:"
                                    style="text-align: left; white-space: nowrap;" />
-                    <p:inputText id="nome" value="#{cadastroBean.cadastrarPessoa.nome}"
+                    <p:inputText id="nome" value="#{cadastroBean.cadastrarEmpresa.nome}"
                                  style="width:100%;" />
 
 
                     <p:outputLabel for="email" value="E-mail:" styleClass="label" />
-                    <p:inputText id="email" value="#{cadastroBean.cadastrarPessoa.email}"
+                    <p:inputText id="email" value="#{cadastroBean.cadastrarEmpresa.email}"
                                  style="width:100%;" />
 
 
                     <p:outputLabel for="data" value="Data da fundação:" styleClass="label" />
-                    <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.data}"
+                    <p:calendar id="data" value="#{cadastroBean.cadastrarEmpresa.data}"
                                 pattern="dd/MM/yyyy" showIcon="true" />
 
-                    <p:outputLabel for="tipo" value="Tipo de Documento:" styleClass="label" />
-                    <p:selectOneMenu id="tipo" value="#{cadastroBean.cadastrarPessoa.tipoDocumento}"
-                                     style="width:100%;">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="CPF" itemValue="CPF" />
-                        <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
-                        <p:ajax update="docPanel" process="@this" />
-                    </p:selectOneMenu>
-
-                    <!-- Bloco para CPF / CNPJ -->
-                    <h:panelGroup id="docPanel" layout="block">
-                        <!-- Campo CPF: exibido se o tipo for CPF -->
-                        <p:outputLabel for="cpf" value="CPF:" styleClass="label"
-                                       style="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF' ? '' : 'display:none;'}" />
-                        <p:inputMask id="cpf" value="#{cadastroBean.cadastrarPessoa.numeroCPF}"
-                                     mask="999.999.999-99"
-                                     autoClear="true" unmask="true"
-                                     disabled="#{cadastroBean.cadastrarPessoa.tipoDocumento ne 'CPF'}"
-                                     style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF' ? '' : 'display:none;'}" />
-
-                        <!-- Campo CNPJ: exibido se o tipo for CNPJ -->
-                        <p:outputLabel for="cnpj" value="CNPJ:" styleClass="label"
-                                       style="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}" />
-                        <p:inputMask id="cnpj" value="#{cadastroBean.cadastrarPessoa.numeroCNPJ}"
-                                     mask="99.999.999/9999-99"
-                                     autoClear="true" unmask="true"
-                                     disabled="#{cadastroBean.cadastrarPessoa.tipoDocumento ne 'CNPJ'}"
-                                     style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}" />
-                    </h:panelGroup>
                 </p:panelGrid>
 
                 <p:separator/>
