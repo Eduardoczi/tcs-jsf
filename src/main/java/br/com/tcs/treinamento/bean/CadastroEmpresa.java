@@ -8,99 +8,63 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.tcs.treinamento.entity.Pessoa;
-import br.com.tcs.treinamento.model.PessoaVO;
-import br.com.tcs.treinamento.service.PessoaService;
-import br.com.tcs.treinamento.service.impl.PessoaServiceImpl;
+import br.com.tcs.treinamento.entity.Empresa;
+import br.com.tcs.treinamento.model.EmpresaVO;
+import br.com.tcs.treinamento.service.EmpresaService;
+import br.com.tcs.treinamento.service.impl.EmpresaServiceImpl;
 import org.primefaces.PrimeFaces;
 
-@ManagedBean(name="cadastroBean")
+@ManagedBean(name = "cadastroBean")
 @ViewScoped
 public class CadastroEmpresa implements Serializable {
     private static final long serialVersionUID = 3450069247988201468L;
 
-    // Classe VO para os dados da pessoa
-    private PessoaVO cadastrarPessoa = new PessoaVO();
+    private EmpresaVO cadastrarEmpresa = new EmpresaVO();
 
-    // Propriedade para armazenar as mensagens de erro
     private String errorMessage;
 
-    // Instancia manualmente o serviço – assim, o container não fará a injeção de dependências.
-    private transient PessoaService pessoaService = new PessoaServiceImpl();
+    private transient EmpresaService empresaService = new EmpresaServiceImpl();
 
-    /**
-     * Método que converte o VO para a entidade e chama o service para persistir.
-     * Após persistir, exibe o popup de sucesso.
-     */
     public void confirmar() {
-        // Converte o VO para a entidade Pessoa
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome(cadastrarPessoa.getNome());
-        pessoa.setIdade(cadastrarPessoa.getIdade());
-        pessoa.setEmail(cadastrarPessoa.getEmail());
-        pessoa.setArea(cadastrarPessoa.getArea());
-        pessoa.setDataAdmissao(cadastrarPessoa.getDataAdmissao());
-        pessoa.setData(cadastrarPessoa.getData());
-        pessoa.setTipoDocumento(cadastrarPessoa.getTipoDocumento());
-        pessoa.setNumeroCPF(cadastrarPessoa.getNumeroCPF());
-        pessoa.setNumeroCNPJ(cadastrarPessoa.getNumeroCNPJ());
-        pessoa.setAtivo(true);
+        Empresa empresa = new Empresa();
+        empresa.setNome(cadastrarEmpresa.getNome());
+        empresa.setEmail(cadastrarEmpresa.getEmail());
+        empresa.setData(cadastrarEmpresa.getData());
+        empresa.setNumeroCNPJ(cadastrarEmpresa.getNumeroCNPJ());
+        empresa.setAtivo(true);
 
-        // Chama o service para persistir a entidade
         try {
-            pessoaService.cadastrar(pessoa);
-            // Exibe o popup de sucesso após a confirmação
+            empresaService.cadastrar(empresa);
             PrimeFaces.current().executeScript("PF('successDialog').show();");
         } catch (Exception e) {
-            // Em caso de erro na persistência, exibe o diálogo de erro
-            errorMessage = "Erro ao cadastrar pessoa: " + e.getMessage();
+            errorMessage = "Erro ao cadastrar empresa: " + e.getMessage();
             PrimeFaces.current().executeScript("PF('errorDialog').show();");
-            return;
         }
     }
 
     public void limpar() {
-        cadastrarPessoa.setNome(null);
-        cadastrarPessoa.setIdade(null);
-        cadastrarPessoa.setEmail(null);
-        cadastrarPessoa.setArea(null);
-        cadastrarPessoa.setDataAdmissao(null);
-        cadastrarPessoa.setData(null);
-        cadastrarPessoa.setTipoDocumento(null);
-        cadastrarPessoa.setNumeroCPF(null);
-        cadastrarPessoa.setNumeroCNPJ(null);
+        cadastrarEmpresa.setNome(null);
+        cadastrarEmpresa.setEmail(null);
+        cadastrarEmpresa.setData(null);
+        cadastrarEmpresa.setNumeroCNPJ(null);
         errorMessage = null;
     }
 
     public void validarCampos() {
         List<String> erros = new ArrayList<>();
 
-        if (cadastrarPessoa.getNome() == null || cadastrarPessoa.getNome().trim().isEmpty()) {
+        if (cadastrarEmpresa.getNome() == null || cadastrarEmpresa.getNome().trim().isEmpty()) {
             erros.add("Nome não informado.");
         }
-        if (cadastrarPessoa.getIdade() == null) {
-            erros.add("Idade não informada.");
-        }
-        if (cadastrarPessoa.getEmail() == null || cadastrarPessoa.getEmail().trim().isEmpty()) {
+        if (cadastrarEmpresa.getEmail() == null || cadastrarEmpresa.getEmail().trim().isEmpty()) {
             erros.add("E-mail não informado.");
         }
-        if (cadastrarPessoa.getData() == null) {
-            erros.add("Data de nascimento não informada.");
+        if (cadastrarEmpresa.getData() == null) {
+            erros.add("Data de fundação não informada.");
         }
-        if (cadastrarPessoa.getTipoDocumento() == null || cadastrarPessoa.getTipoDocumento().trim().isEmpty()) {
-            erros.add("Tipo de documento não informado.");
-        } else {
-            if ("CPF".equals(cadastrarPessoa.getTipoDocumento())) {
-                if (cadastrarPessoa.getNumeroCPF() == null || cadastrarPessoa.getNumeroCPF().trim().isEmpty() ||
-                        cadastrarPessoa.getNumeroCPF().trim().length() < 11) {
-                    erros.add("CPF não informado ou incompleto (deve conter 11 dígitos).");
-                }
-            } else if ("CNPJ".equals(cadastrarPessoa.getTipoDocumento())) {
-                if (cadastrarPessoa.getNumeroCNPJ() == null || cadastrarPessoa.getNumeroCNPJ().trim().isEmpty() ||
-                        cadastrarPessoa.getNumeroCNPJ().trim().length() < 14) {
-                    erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
-                }
-            }
+        if (cadastrarEmpresa.getNumeroCNPJ() == null || cadastrarEmpresa.getNumeroCNPJ().trim().isEmpty()
+                || cadastrarEmpresa.getNumeroCNPJ().trim().length() < 14) {
+            erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
         }
 
         if (!erros.isEmpty()) {
@@ -111,48 +75,32 @@ public class CadastroEmpresa implements Serializable {
         }
     }
 
-    public void validarCamposAreaAdmissao() {
-        List<String> erros = new ArrayList<>();
-
-        if (cadastrarPessoa.getArea() == null || cadastrarPessoa.getArea().trim().isEmpty()) {
-            erros.add("Area não informado.");
-        }
-
-        if (cadastrarPessoa.getDataAdmissao() == null) {
-            erros.add("Data de admissao não informada.");
-        }
-
-        if (!erros.isEmpty()) {
-            errorMessage = String.join("<br/>", erros);
-            PrimeFaces.current().executeScript("PF('errorDialog').show();");
-        } else {
-            PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
-        }
-    }
-
     public String getErrorMessage() {
         return errorMessage;
     }
+
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    public PessoaVO getCadastrarPessoa() {
-        return cadastrarPessoa;
-    }
-    public void setCadastrarPessoa(PessoaVO cadastrarPessoa) {
-        this.cadastrarPessoa = cadastrarPessoa;
-    }
-    public PessoaService getPessoaService() {
-        return pessoaService;
-    }
-    public void setPessoaService(PessoaService pessoaService) {
-        this.pessoaService = pessoaService;
-    }
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        // Realiza a deserialização padrão
-        ois.defaultReadObject();
-        // Re-inicializa o serviço para evitar que seja nulo ou uma instância não serializável
-        this.pessoaService = new PessoaServiceImpl();
+
+    public EmpresaVO getCadastrarEmpresa() {
+        return cadastrarEmpresa;
     }
 
+    public void setCadastrarEmpresa(EmpresaVO cadastrarEmpresa) {
+        this.cadastrarEmpresa = cadastrarEmpresa;
+    }
+
+    public EmpresaService getEmpresaService() {
+        return empresaService;
+    }
+
+    public void setEmpresaService(EmpresaService empresaService) {
+        this.empresaService = empresaService;
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        this.empresaService = new EmpresaServiceImpl();
+    }
 }
