@@ -104,6 +104,8 @@ public class ConsultaPessoaBean implements Serializable {
         pessoa.setNome(pessoaSelecionada.getNome());
         pessoa.setIdade(pessoaSelecionada.getIdade());
         pessoa.setEmail(pessoaSelecionada.getEmail());
+        pessoa.setArea(pessoaSelecionada.getArea());
+        pessoa.setDataAdmissao(pessoaSelecionada.getDataAdmissao());
         pessoa.setData(pessoaSelecionada.getData());
         pessoa.setTipoDocumento(pessoaSelecionada.getTipoDocumento());
         pessoa.setNumeroCPF(pessoaSelecionada.getNumeroCPF());
@@ -140,9 +142,17 @@ public class ConsultaPessoaBean implements Serializable {
         if (pessoaSelecionada.getEmail() == null || pessoaSelecionada.getEmail().trim().isEmpty()) {
             erros.add("E-mail não informado.");
         }
+        if (pessoaSelecionada.getArea() == null || pessoaSelecionada.getArea().trim().isEmpty()) {
+            erros.add("E-mail não informado.");
+        }
         if (pessoaSelecionada.getData() == null) {
             erros.add("Data de nascimento não informada.");
         }
+
+        if (pessoaSelecionada.getDataAdmissao() == null) {
+            erros.add("Data de nascimento não informada.");
+        }
+
         if (pessoaSelecionada.getTipoDocumento() == null || pessoaSelecionada.getTipoDocumento().trim().isEmpty()) {
             erros.add("Tipo de documento não informado.");
         } else {
