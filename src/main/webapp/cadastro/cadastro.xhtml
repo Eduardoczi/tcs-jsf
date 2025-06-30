@@ -1,4 +1,4 @@
- <ui:composition template="/WEB-INF/templates/template.xhtml"
+<ui:composition template="/WEB-INF/templates/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -13,9 +13,6 @@
         <h:form id="formCadastro">
             <!-- Inclui o modal (confirmarModel.xhtml) para reutilização -->
             <ui:include src="/model/confirmarModel.xhtml" >
-                    <ui:param name="modalBean" value="#{cadastroBean}"/>
-            </ui:include>
-            <ui:include src="/model/confirmarValidacao.xhtml" >
                 <ui:param name="modalBean" value="#{cadastroBean}"/>
             </ui:include>
 
@@ -32,22 +29,11 @@
 
                     <p:outputLabel for="idade" value="Idade:" styleClass="label" />
                     <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
-                                 style="width:4em;"
-                                 required="true"
-                                 requiredMessage="É necessario informar a idade"/>
-
+                                 style="width:4em;" />
 
                     <p:outputLabel for="email" value="E-mail:" styleClass="label" />
                     <p:inputText id="email" value="#{cadastroBean.cadastrarPessoa.email}"
                                  style="width:100%;" />
-
-                    <p:outputLabel for="area" value="Area:" styleClass="label" />
-                    <p:inputText id="area" value="#{cadastroBean.cadastrarPessoa.area}"
-                                 style="width:100%;" />
-
-                    <p:outputLabel for="dataAdmissao" value="Data de Admissao:" styleClass="label" />
-                    <p:calendar id="dataAdmissao" value="#{cadastroBean.cadastrarPessoa.dataAdmissao}"
-                                pattern="dd/MM/yyyy" showIcon="true" />
 
                     <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
                     <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.data}"
@@ -96,12 +82,6 @@
                      Se a validação for bem-sucedida, o método validarCampos() invoca o modal de confirmação. -->
                 <p:commandButton value="Salvar"
                                  action="#{cadastroBean.validarCampos}"
-                                 update="@form"
-                                 icon="pi pi-save"
-                                 ajax="true" />
-
-                <p:commandButton value="Validação"
-                                 action="#{cadastroBean.validarCamposAreaAdmissao}"
                                  update="@form"
                                  icon="pi pi-save"
                                  ajax="true" />

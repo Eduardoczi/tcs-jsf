@@ -27,12 +27,6 @@ public class Pessoa implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String area;
-
-    @Temporal(TemporalType.DATE)
-    private Date dataAdmissao;
-
     // Data de nascimento (utiliza somente a data, sem horário)
     @Temporal(TemporalType.DATE)
     private Date data;
@@ -61,13 +55,11 @@ public class Pessoa implements Serializable {
     }
 
     // Construtor completo (opcional para facilitar a criação)
-    public Pessoa(String nome, Integer idade, String email, String area, Date dataAdmissao, Date data, String tipoDocumento,
+    public Pessoa(String nome, Integer idade, String email, Date data, String tipoDocumento,
                   String numeroCPF, String numeroCNPJ, String motivoManutencao, Date dataManutencao, Boolean ativo) {
         this.nome = nome;
         this.idade = idade;
         this.email = email;
-        this.area = area;
-        this.dataAdmissao = dataAdmissao;
         this.data = data;
         this.tipoDocumento = tipoDocumento;
         this.numeroCPF = numeroCPF;
@@ -78,22 +70,6 @@ public class Pessoa implements Serializable {
     }
 
     // Getters e Setters
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public Date getDataAdmissao() {
-        return dataAdmissao;
-    }
-
-    public void setDataAdmissao(Date dataAdmissao) {
-        this.dataAdmissao = dataAdmissao;
-    }
 
     public Long getId() {
         return id;
@@ -207,8 +183,6 @@ public class Pessoa implements Serializable {
                 ", nome='" + nome + '\'' +
                 ", idade=" + idade +
                 ", email='" + email + '\'' +
-                ", area='" + area + '\'' +
-                ", dataAdmissao=" + dataAdmissao +
                 ", data=" + data +
                 ", tipoDocumento='" + tipoDocumento + '\'' +
                 ", numeroCPF='" + numeroCPF + '\'' +

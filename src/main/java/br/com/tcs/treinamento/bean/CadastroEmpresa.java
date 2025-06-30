@@ -14,9 +14,9 @@ import br.com.tcs.treinamento.service.EmpresaService;
 import br.com.tcs.treinamento.service.impl.EmpresaServiceImpl;
 import org.primefaces.PrimeFaces;
 
-@ManagedBean(name = "cadastroBean")
+@ManagedBean(name = "CadastroEmpresa")
 @ViewScoped
-public class CadastroEmpresa implements Serializable {
+public class CadastroEmpresa  implements Serializable {
     private static final long serialVersionUID = 3450069247988201468L;
 
     private EmpresaVO cadastrarEmpresa = new EmpresaVO();
@@ -30,6 +30,7 @@ public class CadastroEmpresa implements Serializable {
         empresa.setNome(cadastrarEmpresa.getNome());
         empresa.setEmail(cadastrarEmpresa.getEmail());
         empresa.setData(cadastrarEmpresa.getData());
+        empresa.setTipoDocumento(cadastrarEmpresa.getTipoDocumento());
         empresa.setNumeroCNPJ(cadastrarEmpresa.getNumeroCNPJ());
         empresa.setAtivo(true);
 
@@ -46,6 +47,7 @@ public class CadastroEmpresa implements Serializable {
         cadastrarEmpresa.setNome(null);
         cadastrarEmpresa.setEmail(null);
         cadastrarEmpresa.setData(null);
+        cadastrarEmpresa.setTipoDocumento(null);
         cadastrarEmpresa.setNumeroCNPJ(null);
         errorMessage = null;
     }
@@ -54,7 +56,7 @@ public class CadastroEmpresa implements Serializable {
         List<String> erros = new ArrayList<>();
 
         if (cadastrarEmpresa.getNome() == null || cadastrarEmpresa.getNome().trim().isEmpty()) {
-            erros.add("Nome não informado.");
+            erros.add("Nome da empresa não informado.");
         }
         if (cadastrarEmpresa.getEmail() == null || cadastrarEmpresa.getEmail().trim().isEmpty()) {
             erros.add("E-mail não informado.");
@@ -62,10 +64,7 @@ public class CadastroEmpresa implements Serializable {
         if (cadastrarEmpresa.getData() == null) {
             erros.add("Data de fundação não informada.");
         }
-        if (cadastrarEmpresa.getNumeroCNPJ() == null || cadastrarEmpresa.getNumeroCNPJ().trim().isEmpty()
-                || cadastrarEmpresa.getNumeroCNPJ().trim().length() < 14) {
-            erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
-        }
+
 
         if (!erros.isEmpty()) {
             errorMessage = String.join("<br/>", erros);

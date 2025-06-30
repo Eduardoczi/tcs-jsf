@@ -10,16 +10,18 @@ public class EmpresaVO implements Serializable {
     private String nome;
     private String email;
     private Date data;
+    private String tipoDocumento; // "CPF" ou "CNPJ"
     private String numeroCNPJ;
     private String motivoManutencao;
     private Date dataManutencao;
     private Boolean ativo = true;
 
-    public EmpresaVO(Long id,String nome,String email, Date data, String numeroCNPJ, Date dataManutencao, String motivoManutencao, Boolean ativo) {
+    public EmpresaVO(Long id,String nome,String email, Date data,String tipoDocumento, String numeroCNPJ, Date dataManutencao, String motivoManutencao, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.data = data;
+        this.tipoDocumento = tipoDocumento;
         this.numeroCNPJ = numeroCNPJ;
         this.dataManutencao = dataManutencao;
         this.motivoManutencao = motivoManutencao;
@@ -27,6 +29,14 @@ public class EmpresaVO implements Serializable {
     }
 
     public EmpresaVO() {
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
     public Long getId() {

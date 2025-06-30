@@ -57,10 +57,6 @@ public class ConsultaPessoaBean implements Serializable {
         return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
     }
 
-    public void prepararEdicaoArea(Pessoa pessoa) {
-        this.pessoaSelecionada = pessoa;
-    }
-
     public String prepararExclusao(Pessoa pessoa) {
         this.pessoaSelecionada = pessoa;
         return "excluir?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=false";
@@ -108,8 +104,6 @@ public class ConsultaPessoaBean implements Serializable {
         pessoa.setNome(pessoaSelecionada.getNome());
         pessoa.setIdade(pessoaSelecionada.getIdade());
         pessoa.setEmail(pessoaSelecionada.getEmail());
-        pessoa.setArea(pessoaSelecionada.getArea());
-        pessoa.setDataAdmissao(pessoaSelecionada.getDataAdmissao());
         pessoa.setData(pessoaSelecionada.getData());
         pessoa.setTipoDocumento(pessoaSelecionada.getTipoDocumento());
         pessoa.setNumeroCPF(pessoaSelecionada.getNumeroCPF());
@@ -173,25 +167,6 @@ public class ConsultaPessoaBean implements Serializable {
         }
     }
 
-    public void validarCamposAreaAdmissao() {
-        List<String> erros = new ArrayList<>();
-
-        if (pessoaSelecionada.getArea() == null || pessoaSelecionada.getArea().trim().isEmpty()) {
-            erros.add("Area não informado.");
-        }
-
-        if (pessoaSelecionada.getDataAdmissao() == null) {
-            erros.add("Data de admissao não informada.");
-        }
-
-        if (!erros.isEmpty()) {
-            errorMessage = String.join("<br/>", erros);
-            PrimeFaces.current().executeScript("PF('errorDialog').show();");
-        } else {
-            PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
-        }
-    }
-
     public void exportarPdf() {
         System.out.println("Implementar metodo para PDF");
     }
@@ -247,6 +222,4 @@ public class ConsultaPessoaBean implements Serializable {
     public void setTpManutencao(Boolean tpManutencao) {
         this.tpManutencao = tpManutencao;
     }
-
-
 }

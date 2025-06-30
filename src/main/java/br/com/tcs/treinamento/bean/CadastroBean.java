@@ -38,8 +38,6 @@ public class CadastroBean implements Serializable {
         pessoa.setNome(cadastrarPessoa.getNome());
         pessoa.setIdade(cadastrarPessoa.getIdade());
         pessoa.setEmail(cadastrarPessoa.getEmail());
-        pessoa.setArea(cadastrarPessoa.getArea());
-        pessoa.setDataAdmissao(cadastrarPessoa.getDataAdmissao());
         pessoa.setData(cadastrarPessoa.getData());
         pessoa.setTipoDocumento(cadastrarPessoa.getTipoDocumento());
         pessoa.setNumeroCPF(cadastrarPessoa.getNumeroCPF());
@@ -63,8 +61,6 @@ public class CadastroBean implements Serializable {
         cadastrarPessoa.setNome(null);
         cadastrarPessoa.setIdade(null);
         cadastrarPessoa.setEmail(null);
-        cadastrarPessoa.setArea(null);
-        cadastrarPessoa.setDataAdmissao(null);
         cadastrarPessoa.setData(null);
         cadastrarPessoa.setTipoDocumento(null);
         cadastrarPessoa.setNumeroCPF(null);
@@ -110,26 +106,6 @@ public class CadastroBean implements Serializable {
             PrimeFaces.current().executeScript("PF('confirmDialog').show();");
         }
     }
-
-    public void validarCamposAreaAdmissao() {
-        List<String> erros = new ArrayList<>();
-
-        if (cadastrarPessoa.getArea() == null || cadastrarPessoa.getArea().trim().isEmpty()) {
-            erros.add("Area não informado.");
-        }
-
-        if (cadastrarPessoa.getDataAdmissao() == null) {
-            erros.add("Data de admissao não informada.");
-        }
-
-        if (!erros.isEmpty()) {
-            errorMessage = String.join("<br/>", erros);
-            PrimeFaces.current().executeScript("PF('errorDialog').show();");
-        } else {
-            PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
-        }
-    }
-
     public String getErrorMessage() {
         return errorMessage;
     }

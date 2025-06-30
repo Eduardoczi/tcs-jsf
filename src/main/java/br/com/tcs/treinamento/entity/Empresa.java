@@ -28,6 +28,9 @@ public class Empresa implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date data;
 
+    // Indica se o documento é CPF ou CNPJ
+    private String tipoDocumento;
+
     // Número do CNPJ (caso tipoDocumento seja CNPJ)
     private String numeroCNPJ;
 
@@ -46,11 +49,12 @@ public class Empresa implements Serializable {
     }
 
     // Construtor completo (opcional para facilitar a criação)
-    public Empresa(String nome, String email, Date data,
+    public Empresa(String nome, String email, Date data,String tipoDocumento,
                   String numeroCNPJ, String motivoManutencao, Date dataManutencao, Boolean ativo) {
         this.nome = nome;
         this.email = email;
         this.data = data;
+        this.tipoDocumento = tipoDocumento;
         this.numeroCNPJ = numeroCNPJ;
         this.motivoManutencao = motivoManutencao;
         this.dataManutencao = dataManutencao;
@@ -58,6 +62,15 @@ public class Empresa implements Serializable {
     }
 
     // Getters e Setters
+
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
 
     public Long getId() {
         return id;
