@@ -38,8 +38,6 @@ public class CadastroBean implements Serializable {
         pessoa.setNome(cadastrarPessoa.getNome());
         pessoa.setIdade(cadastrarPessoa.getIdade());
         pessoa.setEmail(cadastrarPessoa.getEmail());
-        pessoa.getArea(cadastrarPessoa.getArea());
-        pessoa.setDataAdmissao(cadastrarPessoa.getDataAdmissao());
         pessoa.setData(cadastrarPessoa.getData());
         pessoa.setTipoDocumento(cadastrarPessoa.getTipoDocumento());
         pessoa.setNumeroCPF(cadastrarPessoa.getNumeroCPF());
@@ -63,8 +61,6 @@ public class CadastroBean implements Serializable {
         cadastrarPessoa.setNome(null);
         cadastrarPessoa.setIdade(null);
         cadastrarPessoa.setEmail(null);
-        cadastrarPessoa.setArea(null);
-        cadastrarPessoa.setDataAdmissao(null);
         cadastrarPessoa.setData(null);
         cadastrarPessoa.setTipoDocumento(null);
         cadastrarPessoa.setNumeroCPF(null);

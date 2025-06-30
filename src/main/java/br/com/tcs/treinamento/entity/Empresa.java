@@ -50,7 +50,7 @@ public class Empresa implements Serializable {
 
     // Construtor completo (opcional para facilitar a criação)
     public Empresa(String nome, String email, Date data,String tipoDocumento,
-                  String numeroCNPJ, String motivoManutencao, Date dataManutencao, Boolean ativo) {
+                   String numeroCNPJ, String motivoManutencao, Date dataManutencao, Boolean ativo) {
         this.nome = nome;
         this.email = email;
         this.data = data;

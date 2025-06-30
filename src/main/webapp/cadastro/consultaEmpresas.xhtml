@@ -72,6 +72,18 @@
                                                      styleClass="ui-button-secondary"
                                                      style="width:140px;"
                                                      update="@form" />
+
+
+                                </div>
+
+                                <div style="text-align: right;">
+                                    <p:commandButton value="PDF" styleClass="mr-2 mb-2">
+                                        <p:dataExporter type="pdf" target="tbl" fileName="products"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="XLS" styleClass="mr-2 mb-2">
+                                        <p:dataExporter type="xls" target="tbl" fileName="products"/>
+                                    </p:commandButton>
+
                                 </div>
                             </p:column>
 
@@ -79,17 +91,6 @@
 
                         <br/>
 
-                        <div style="text-align: right;">
-                            <p:commandButton value="Exportar PDF"
-                                             action="#{consultaEmpresaBean.exportarPdf}"
-                                             icon="pi pi-file-pdf"
-                                             styleClass="ui-button-secondary"
-                                             style="margin-right:10px;" />
-                            <p:commandButton value="Exportar Excel"
-                                             action="#{consultaEmpresaBean.exportarExcel}"
-                                             icon="pi pi-file-excel"
-                                             styleClass="ui-button-secondary" />
-                        </div>
 
                     </div>
                 </div>
