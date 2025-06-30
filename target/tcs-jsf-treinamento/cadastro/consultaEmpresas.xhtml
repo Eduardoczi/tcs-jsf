@@ -1,0 +1,106 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Consulta de Empresas
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="formConsulta">
+            <p:panel header="Lista de Pessoas Cadastradas" style="width:100%; margin:0 auto;">
+                <p:messages showDetail="true" closable="true" />
+
+                <div style="width:100%;">
+                    <div style="transform: scale(0.9); transform-origin: top left; width:100%;">
+                        <p:dataTable id="tabelaPessoas"
+                                     value="#{consultaEmpresaBean.empresas}"
+                                     var="e"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     rows="7"
+                                     autoLayout="true"
+                                     responsiveLayout="scroll"
+                                     emptyMessage="Nenhuma pessoa cadastrada."
+                                     rowKey="#{p.id}"
+                                     styleClass="ui-datatable-striped ui-datatable-hover"
+                                     style="width:100%; table-layout:auto;">
+
+                            <p:column headerText="Nome" style="width:25%;">
+                                #{e.nome}
+                            </p:column>
+
+                            <p:column headerText="Email" style="width:20%;">
+                                #{e.email}
+                            </p:column>
+
+                            <p:column headerText="Data de Fundação" style="width:12%;">
+                                <h:outputText value="#{e.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+
+                            <p:column headerText="CNPJ" style="width:17%;">
+                                <h:outputText value="#{e.numeroCNPJ}" />
+                            </p:column>
+
+                            <p:column headerText="Data da manutenção" style="width:18%;">
+                                <h:outputText value="#{e.dataManutencao}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Status" style="width:10%;">
+                                #{p.ativo ? 'Ativo' : 'Inativo'}
+                            </p:column>
+
+                            <p:column headerText="Ações" style="text-align:center; width:300px;">
+                                <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
+                                    <p:commandButton value="Alterar"
+                                                     action="#{consultaEmpresaBean.prepararEdicao(e)}"
+                                                     icon="pi pi-pencil"
+                                                     styleClass="ui-button-secondary"
+                                                     style="width:140px;"
+                                                     update="@form" />
+                                    <p:commandButton value="Excluir"
+                                                     action="#{consultaEmpresaBean.prepararExclusao(e)}"
+                                                     icon="pi pi-trash"
+                                                     styleClass="ui-button-secondary"
+                                                     style="width:140px;"
+                                                     update="@form" />
+
+
+                                </div>
+
+                                <div style="text-align: right;">
+                                    <p:commandButton value="PDF" styleClass="mr-2 mb-2">
+                                        <p:dataExporter type="pdf" target="tbl" fileName="products"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="XLS" styleClass="mr-2 mb-2">
+                                        <p:dataExporter type="xls" target="tbl" fileName="products"/>
+                                    </p:commandButton>
+
+                                </div>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <br/>
+
+
+                    </div>
+                </div>
+
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="footer">
+        Rodapé – Consulta de Empresas
+    </ui:define>
+
+</ui:composition>
