@@ -6,14 +6,14 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="title">
-        Exclusão de Pessoa
+        Exclusão de Empresa
     </ui:define>
 
     <ui:define name="content">
         <h:form id="formExclusao">
             <!-- Inclui o modal de confirmação para exclusão (confirmarModel.xhtml atualizado) -->
             <ui:include src="/model/confirmarExclusaoModel.xhtml">
-                <ui:param name="modalBean" value="#{consultaPessoaBean}" />
+                <ui:param name="modalBean" value="#{consultaEmpresaBean}" />
             </ui:include>
 
             <p:panel header="Formulário de Exclusão" style="width:600px;">
@@ -22,38 +22,27 @@
 
                 <!-- Painel de Dados da Pessoa (somente leitura) -->
                 <p:panelGrid columns="2" columnClasses="label,value" style="width:100%; margin-bottom:1em;">
-                    <p:outputLabel for="nome" value="Nome Completo:" style="text-align:left; white-space:nowrap;" />
-                    <h:outputText id="nome" value="#{consultaPessoaBean.pessoaSelecionada.nome}" />
-
-                    <p:outputLabel for="idade" value="Idade:" />
-                    <h:outputText id="idade" value="#{consultaPessoaBean.pessoaSelecionada.idade}" />
+                    <p:outputLabel for="nome" value="Nome da Empresa:" style="text-align:left; white-space:nowrap;" />
+                    <h:outputText id="nome" value="#{consultaEmpresaBean.empresaSelecionada.nome}" />
 
                     <p:outputLabel for="email" value="E-mail:" />
-                    <h:outputText id="email" value="#{consultaPessoaBean.pessoaSelecionada.email}" />
+                    <h:outputText id="email" value="#{consultaEmpresaBean.empresaSelecionada.email}" />
 
-                    <p:outputLabel for="data" value="Data de Nascimento:" />
+
+                    <p:outputLabel for="data" value="Data de Fundacao:" />
                     <h:outputText id="data">
-                        <f:convertDateTime pattern="dd/MM/yyyy" value="#{consultaPessoaBean.pessoaSelecionada.data}" />
+                        <f:convertDateTime pattern="dd/MM/yyyy" value="#{consultaEmpresaBean.empresaSelecionada.data}" />
                     </h:outputText>
-
-                    <p:outputLabel for="tipo" value="Tipo de Documento:" />
-                    <h:outputText id="tipo" value="#{consultaPessoaBean.pessoaSelecionada.tipoDocumento}" />
-
-                    <p:outputLabel for="doc" value="Documento:" />
-                    <h:outputText id="doc"
-                                  value="#{consultaPessoaBean.pessoaSelecionada.tipoDocumento eq 'CPF' ?
-                                           consultaPessoaBean.pessoaSelecionada.numeroCPF :
-                                           consultaPessoaBean.pessoaSelecionada.numeroCNPJ}" />
 
                     <p:outputLabel for="status" value="Status:" />
                     <h:outputText id="status"
-                                  value="#{consultaPessoaBean.pessoaSelecionada.ativo ? 'Ativo' : 'Inativo'}" />
+                                  value="#{consultaEmpresaBean.empresaSelecionada.ativo ? 'Ativo' : 'Inativo'}" />
                 </p:panelGrid>
 
                 <p:separator />
 
                 <!-- Botões de Ação -->
-                <p:commandButton value="Limpar" action="#{consultaPessoaBean.limparAlteracoes}" update="@form"
+                <p:commandButton value="Limpar" action="#{consultaEmpresaBean.limparAlteracoes}" update="@form"
                                  icon="pi pi-refresh" styleClass="ui-button-secondary" />
 
                 <!-- Botão que abre o modal de confirmação (nosso novo modal usa widgetVar 'exclusionConfirmDialog') -->
@@ -66,7 +55,7 @@
                 <h:outputText value="Exclusão realizada com sucesso!" />
                 <f:facet name="footer">
                     <p:commandButton value="Ok"
-                                     action="#{consultaPessoaBean.atualizarConsulta}"
+                                     action="#{consultaEmpresaBean.atualizarConsulta}"
                                      ajax="false"
                                      icon="pi pi-check" />
                 </f:facet>

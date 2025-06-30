@@ -1,11 +1,8 @@
 package br.com.tcs.treinamento.bean;
 
 import br.com.tcs.treinamento.entity.Empresa;
-import br.com.tcs.treinamento.entity.Pessoa;
 import br.com.tcs.treinamento.service.EmpresaService;
-import br.com.tcs.treinamento.service.PessoaService;
 import br.com.tcs.treinamento.service.impl.EmpresaServiceImpl;
-import br.com.tcs.treinamento.service.impl.PessoaServiceImpl;
 import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +20,8 @@ import java.util.Map;
 public class ConsultaEmpresaBean implements Serializable {
 
     private List<Empresa> empresas;
-    private Empresa empresaSelecionado;
+
+    private Empresa empresaSelecionada;
     private String errorMessage;
     private Long empresaId;
     private Boolean tpManutencao;
@@ -32,7 +30,6 @@ public class ConsultaEmpresaBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        // Recupera parâmetro "pessoaId" da URL
         Map<String, String> params = FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getRequestParameterMap();
@@ -40,12 +37,11 @@ public class ConsultaEmpresaBean implements Serializable {
         if (idParam != null && !idParam.trim().isEmpty()) {
             try {
                 empresaId = Long.valueOf(idParam);
-                empresaSelecionado = empresaService.buscarPorId(empresaId);
+                empresaSelecionada = empresaService.buscarPorId(empresaId);
             } catch (NumberFormatException e) {
                 errorMessage = "ID inválido da empresa.";
             }
         }
-        // Recupera o parâmetro tpManutencao; se não existir, assume um valor padrão (por exemplo, true para edição)
         String tpParam = params.get("tpManutencao");
         if (tpParam != null && !tpParam.trim().isEmpty()) {
             setTpManutencao(Boolean.valueOf(tpParam));
@@ -56,94 +52,80 @@ public class ConsultaEmpresaBean implements Serializable {
     }
 
     public String prepararEdicao(Empresa empresa) {
-        this.empresaSelecionado = empresa;
-        return "alterar?faces-redirect=true&pessoaId=" + empresa.getId() + "&tpManutencao=true";
+        this.empresaSelecionada = empresa;
+        return "alterarEmpresa?faces-redirect=true&empresaId=" + empresa.getId() + "&tpManutencao=true";
     }
 
     public void prepararEdicaoArea(Empresa empresa) {
-        this.empresaSelecionado = empresa;
+        this.empresaSelecionada = empresa;
     }
 
     public String prepararExclusao(Empresa empresa) {
-        this.empresaSelecionado = empresa;
-        return "excluir?faces-redirect=true&pessoaId=" + empresa.getId() + "&tpManutencao=false";
+        this.empresaSelecionada = empresa;
+        return "excluirEmpresa?faces-redirect=true&empresaId=" + empresa.getId() + "&tpManutencao=false";
     }
 
     public String atualizarConsulta() {
-        empresaService.atualizar(empresaSelecionado);
+        empresaService.atualizar(empresaSelecionada);
         empresas = empresaService.listar();
-        return "consultaPessoas?faces-redirect=true";
+        return "consultaEmpresas?faces-redirect=true";
     }
 
     public void limparAlteracoes() {
-        if (empresaSelecionado != null) {
-            empresaSelecionado = empresaService.buscarPorId(empresaSelecionado.getId());
+        if (empresaSelecionada != null) {
+            empresaSelecionada = empresaService.buscarPorId(empresaSelecionada.getId());
         }
     }
 
-    /**
-     * Método que converte o VO para a entidade e chama o service para persistir.
-     * Após persistir, exibe o popup de sucesso.
-     */
     public void confirmar() {
-        // Converte o VO para a entidade Pessoa
         Empresa empresa = mapEmpresaEntity();
-        // Chama o service para persistir a entidade
         try {
             empresaService.atualizar(empresa);
-            // Exibe o popup de sucesso após a confirmação
             PrimeFaces.current().executeScript("PF('successDialog').show();");
         } catch (Exception e) {
-            // Em caso de erro na persistência, exibe o diálogo de erro
-            errorMessage = "Erro ao cadastrar pessoa: " + e.getMessage();
+            errorMessage = "Erro ao cadastrar empresa: " + e.getMessage();
             PrimeFaces.current().executeScript("PF('errorDialog').show();");
-            return;
         }
     }
 
-    /**
-     * mapPessoaEntity
-     * Mapeamento da VO para Entity
-     */
     private Empresa mapEmpresaEntity() {
         Empresa empresa = new Empresa();
-        empresa.setId(empresaSelecionado.getId());
-        empresa.setNome(empresaSelecionado.getNome());
-        empresa.setEmail(empresaSelecionado.getEmail());
-        empresa.setData(empresaSelecionado.getData());
-        empresa.setNumeroCNPJ(empresaSelecionado.getNumeroCNPJ());
+        empresa.setId(empresaSelecionada.getId());
+        empresa.setNome(empresaSelecionada.getNome());
+        empresa.setEmail(empresaSelecionada.getEmail());
+        empresa.setData(empresaSelecionada.getData());
+        empresa.setNumeroCNPJ(empresaSelecionada.getNumeroCNPJ());
         empresa.setDataManutencao(new Date());
         empresa.setAtivo(getTpManutencao());
         return empresa;
     }
 
-    public void confirmarExclusao(){
+    public void confirmarExclusao() {
         Empresa empresa = mapEmpresaEntity();
         try {
-            empresaService.atualizar(empresa); //Exclusao logica
-            //pessoaService.excluir(pessoa); // Exclusao fisica
-            // Exibe o popup de sucesso após a confirmação
+            empresaService.atualizar(empresa); // Exclusão lógica
             PrimeFaces.current().executeScript("PF('successDialog').show();");
         } catch (Exception e) {
-            // Em caso de erro na persistência, exibe o diálogo de erro
-            errorMessage = "Erro ao cadastrar pessoa: " + e.getMessage();
+            errorMessage = "Erro ao excluir empresa: " + e.getMessage();
             PrimeFaces.current().executeScript("PF('errorDialog').show();");
-            return;
         }
     }
 
     public void validarCampos() {
         List<String> erros = new ArrayList<>();
 
-        if (empresaSelecionado.getNome() == null || empresaSelecionado.getNome().trim().isEmpty()) {
-            erros.add("Nome não informado.");
-        }
-
-        if (empresaSelecionado.getEmail() == null || empresaSelecionado.getEmail().trim().isEmpty()) {
-            erros.add("E-mail não informado.");
-        }
-        if (empresaSelecionado.getData() == null) {
-            erros.add("Data de fundação não informada.");
+        if (empresaSelecionada == null) {
+            erros.add("Empresa não selecionada.");
+        } else {
+            if (empresaSelecionada.getNome() == null || empresaSelecionada.getNome().trim().isEmpty()) {
+                erros.add("Nome não informado.");
+            }
+            if (empresaSelecionada.getEmail() == null || empresaSelecionada.getEmail().trim().isEmpty()) {
+                erros.add("E-mail não informado.");
+            }
+            if (empresaSelecionada.getData() == null) {
+                erros.add("Data de fundação não informada.");
+            }
         }
 
         if (!erros.isEmpty()) {
@@ -154,7 +136,6 @@ public class ConsultaEmpresaBean implements Serializable {
         }
     }
 
-
     public void exportarPdf() {
         System.out.println("Implementar metodo para PDF");
     }
@@ -162,6 +143,8 @@ public class ConsultaEmpresaBean implements Serializable {
     public void exportarExcel() {
         System.out.println("Implementar metodo para Excel");
     }
+
+    // Getters e Setters
 
     public List<Empresa> getEmpresas() {
         return empresas;
@@ -171,12 +154,12 @@ public class ConsultaEmpresaBean implements Serializable {
         this.empresas = empresas;
     }
 
-    public Empresa getEmpresaSelecionado() {
-        return empresaSelecionado;
+    public Empresa getEmpresaSelecionada() {
+        return empresaSelecionada;
     }
 
-    public void setEmpresaSelecionado(Empresa empresaSelecionado) {
-        this.empresaSelecionado = empresaSelecionado;
+    public void setEmpresaSelecionada(Empresa empresaSelecionada) {
+        this.empresaSelecionada = empresaSelecionada;
     }
 
     public Long getEmpresaId() {
@@ -210,6 +193,5 @@ public class ConsultaEmpresaBean implements Serializable {
     public void setTpManutencao(Boolean tpManutencao) {
         this.tpManutencao = tpManutencao;
     }
-
 
 }

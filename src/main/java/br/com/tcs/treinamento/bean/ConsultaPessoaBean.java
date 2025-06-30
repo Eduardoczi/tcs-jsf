@@ -167,6 +167,8 @@ public class ConsultaPessoaBean implements Serializable {
         }
     }
 
+
+
     public void exportarPdf() {
         System.out.println("Implementar metodo para PDF");
     }

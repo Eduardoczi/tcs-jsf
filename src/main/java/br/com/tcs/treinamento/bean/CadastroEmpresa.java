@@ -14,7 +14,7 @@ import br.com.tcs.treinamento.service.EmpresaService;
 import br.com.tcs.treinamento.service.impl.EmpresaServiceImpl;
 import org.primefaces.PrimeFaces;
 
-@ManagedBean(name = "CadastroEmpresa")
+@ManagedBean(name = "cadastroEmpresa")
 @ViewScoped
 public class CadastroEmpresa  implements Serializable {
     private static final long serialVersionUID = 3450069247988201468L;
@@ -30,7 +30,6 @@ public class CadastroEmpresa  implements Serializable {
         empresa.setNome(cadastrarEmpresa.getNome());
         empresa.setEmail(cadastrarEmpresa.getEmail());
         empresa.setData(cadastrarEmpresa.getData());
-        empresa.setTipoDocumento(cadastrarEmpresa.getTipoDocumento());
         empresa.setNumeroCNPJ(cadastrarEmpresa.getNumeroCNPJ());
         empresa.setAtivo(true);
 
@@ -56,15 +55,19 @@ public class CadastroEmpresa  implements Serializable {
         List<String> erros = new ArrayList<>();
 
         if (cadastrarEmpresa.getNome() == null || cadastrarEmpresa.getNome().trim().isEmpty()) {
-            erros.add("Nome da empresa não informado.");
+            erros.add("Nome não informado.");
         }
+
         if (cadastrarEmpresa.getEmail() == null || cadastrarEmpresa.getEmail().trim().isEmpty()) {
             erros.add("E-mail não informado.");
         }
         if (cadastrarEmpresa.getData() == null) {
-            erros.add("Data de fundação não informada.");
+            erros.add("Data de nascimento não informada.");
         }
-
+        if (cadastrarEmpresa.getNumeroCNPJ() == null || cadastrarEmpresa.getNumeroCNPJ().trim().isEmpty() ||
+                cadastrarEmpresa.getNumeroCNPJ().trim().length() < 14) {
+            erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
+        }
 
         if (!erros.isEmpty()) {
             errorMessage = String.join("<br/>", erros);
@@ -73,6 +76,7 @@ public class CadastroEmpresa  implements Serializable {
             PrimeFaces.current().executeScript("PF('confirmDialog').show();");
         }
     }
+
 
     public String getErrorMessage() {
         return errorMessage;

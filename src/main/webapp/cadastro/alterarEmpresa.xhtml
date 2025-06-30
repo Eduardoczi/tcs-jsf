@@ -6,70 +6,73 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="title">
-        Cadastro de Pessoa
+        Cadastro de Empresa
     </ui:define>
 
     <ui:define name="content">
         <h:form id="formCadastro">
+            <!-- Inclui o modal (confirmarModel.xhtml) para reutilização -->
             <ui:include src="/model/confirmarModel.xhtml" >
-                <ui:param name="modalBean" value="#{cadastroEmpresa}"/>
-            </ui:include>
-            <ui:include src="/model/confirmarValidacao.xhtml" >
-                <ui:param name="modalBean" value="#{cadastroEmpresa}"/>
+                <ui:param name="modalBean" value="#{consultaEmpresaBean}"/>
             </ui:include>
 
-            <p:panel header="Formulário de Cadastro" style="width:600px;">
+            <p:panel header="Formulário de alteração de cadastro" style="width:600px;">
+                <!-- Mensagens gerais de erro -->
                 <p:messages showDetail="true" closable="true" />
 
+                <!-- Formulário com painel de duas colunas -->
                 <p:panelGrid columns="2" columnClasses="label,value" style="width:100%; margin-bottom:1em;">
-                    <p:outputLabel for="nome" value="Nome Completo da Empresa:" style="text-align: left; white-space: nowrap;" />
-                    <p:inputText id="nome" value="#{cadastroEmpresa.cadastrarEmpresa.nome}" style="width:100%;" />
+                    <p:outputLabel for="nome" value="Nome da Empresa:"
+                                   style="text-align: left; white-space: nowrap;" />
+                    <p:inputText id="nome" value="#{consultaEmpresaBean.empresaSelecionada.nome}"
+                                 style="width:100%;" />
 
                     <p:outputLabel for="email" value="E-mail:" styleClass="label" />
-                    <p:inputText id="email" value="#{cadastroEmpresa.cadastrarEmpresa.email}" style="width:100%;" />
-
-                    <p:outputLabel for="data" value="Data da fundação:" styleClass="label" />
-                    <p:calendar id="data" value="#{cadastroEmpresa.cadastrarEmpresa.data}" pattern="dd/MM/yyyy" showIcon="true" />
-
-                    <p:outputLabel for="cnpj" value="CNPJ:" styleClass="label" />
-                    <p:inputMask id="cnpj" value="#{cadastroEmpresa.cadastrarEmpresa.numeroCNPJ}"
-                                 mask="99.999.999/9999-99"
-                                 autoClear="true" unmask="true"
+                    <p:inputText id="email" value="#{consultaEmpresaBean.empresaSelecionada.email}"
                                  style="width:100%;" />
+
+                    <p:outputLabel for="data" value="Data de Fundação:" styleClass="label" />
+                    <p:calendar id="data" value="#{consultaEmpresaBean.empresaSelecionada.data}"
+                                pattern="dd/MM/yyyy" showIcon="true" />
                 </p:panelGrid>
 
                 <p:separator/>
 
                 <p:commandButton value="Limpar"
-                                 action="#{cadastroEmpresa.limpar}"
+                                 action="#{consultaEmpresaBean.limpar}"
                                  update="@form"
                                  icon="pi pi-refresh"
                                  styleClass="ui-button-secondary" />
 
+                <!-- Botão Salvar chama o método de validação na bean.
+                     Se a validação for bem-sucedida, o método validarCampos() invoca o modal de confirmação. -->
                 <p:commandButton value="Salvar"
-                                 action="#{cadastroEmpresa.validarCampos}"
+                                 action="#{consultaEmpresaBean.validarCampos}"
                                  update="@form"
                                  icon="pi pi-save"
                                  ajax="true" />
+
             </p:panel>
 
+            <!-- Diálogo para exibir a lista de campos não preenchidos -->
             <p:dialog widgetVar="errorDialog" header="Campos não preenchidos"
                       modal="true" closable="false" resizable="false">
-                <h:outputText value="#{cadastroEmpresa.errorMessage}" escape="false" />
+                <h:outputText value="#{consultaEmpresaBean.errorMessage}" escape="false" />
                 <f:facet name="footer">
                     <p:commandButton value="Fechar"
                                      onclick="PF('errorDialog').hide();"
                                      type="button" />
                 </f:facet>
             </p:dialog>
-
+            <!-- Diaglogo de sucesso-->
             <p:dialog widgetVar="successDialog" header="Sucesso"
                       modal="true" closable="false" resizable="false">
-                <h:outputText value="Cadastro realizado com sucesso!" />
+                <h:outputText value="Cadastro alterado com sucesso!" />
                 <f:facet name="footer">
                     <p:commandButton value="Ok"
-                                     onclick="PF('successDialog').hide();"
-                                     type="button" />
+                                     type="button"
+                                     onclick="PF('successDialog').hide(); window.location='#{request.contextPath}/cadastro/consultaEmpresas.xhtml';"
+                                     icon="pi pi-check" />
                 </f:facet>
             </p:dialog>
         </h:form>
