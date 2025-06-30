@@ -76,7 +76,7 @@ public class CadastroBean implements Serializable {
         if (cadastrarPessoa.getNome() == null || cadastrarPessoa.getNome().trim().isEmpty()) {
             erros.add("Nome não informado.");
         }
-        if (cadastrarPessoa.getIdade() == null) {
+        if (cadastrarPessoa.getIdade() == null ) {
             erros.add("Idade não informada.");
         }
         if (cadastrarPessoa.getEmail() == null || cadastrarPessoa.getEmail().trim().isEmpty()) {
@@ -106,6 +106,25 @@ public class CadastroBean implements Serializable {
             PrimeFaces.current().executeScript("PF('errorDialog').show();");
         } else {
             PrimeFaces.current().executeScript("PF('confirmDialog').show();");
+        }
+    }
+
+    public void validarCamposAreaAdmissao() {
+        List<String> erros = new ArrayList<>();
+
+        if (cadastrarPessoa.getArea() == null || cadastrarPessoa.getArea().trim().isEmpty()) {
+            erros.add("Area não informado.");
+        }
+
+        if (cadastrarPessoa.getDataAdmissao() == null) {
+            erros.add("Data de admissao não informada.");
+        }
+
+        if (!erros.isEmpty()) {
+            errorMessage = String.join("<br/>", erros);
+            PrimeFaces.current().executeScript("PF('errorDialog').show();");
+        } else {
+            PrimeFaces.current().executeScript("PF('confirmDialogVal').show();");
         }
     }
     public String getErrorMessage() {

@@ -136,6 +136,31 @@ public class ConsultaEmpresaBean implements Serializable {
         }
     }
 
+    public void validarCamposAreaAdmissao() {
+        List<String> erros = new ArrayList<>();
+
+        if (empresaSelecionada == null) {
+            erros.add("Empresa não selecionada.");
+        } else {
+            if (empresaSelecionada.getNome() == null || empresaSelecionada.getNome().trim().isEmpty()) {
+                erros.add("Nome não informado.");
+            }
+            if (empresaSelecionada.getEmail() == null || empresaSelecionada.getEmail().trim().isEmpty()) {
+                erros.add("E-mail não informado.");
+            }
+            if (empresaSelecionada.getData() == null) {
+                erros.add("Data de fundação não informada.");
+            }
+        }
+
+        if (!erros.isEmpty()) {
+            errorMessage = String.join("<br/>", erros);
+            PrimeFaces.current().executeScript("PF('errorDialog').show();");
+        } else {
+            PrimeFaces.current().executeScript("PF('confirmDialog').show();");
+        }
+    }
+
     public void exportarPdf() {
         System.out.println("Implementar metodo para PDF");
     }

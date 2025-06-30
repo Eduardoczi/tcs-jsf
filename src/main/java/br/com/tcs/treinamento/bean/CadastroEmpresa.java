@@ -64,10 +64,7 @@ public class CadastroEmpresa  implements Serializable {
         if (cadastrarEmpresa.getData() == null) {
             erros.add("Data de nascimento não informada.");
         }
-        if (cadastrarEmpresa.getNumeroCNPJ() == null || cadastrarEmpresa.getNumeroCNPJ().trim().isEmpty() ||
-                cadastrarEmpresa.getNumeroCNPJ().trim().length() < 14) {
-            erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
-        }
+
 
         if (!erros.isEmpty()) {
             errorMessage = String.join("<br/>", erros);
